@@ -1,10 +1,15 @@
 import './App.css';
+import Main from './pages/Main';
+import Nav from './pages/Nav';
+import Highlightspecials from './pages/Highlightspecials';
 
 function App() {
   return (
-    <div className='App'>
-      <header className='App-header'>Home Page</header>
-    </div>
+    <>
+      <Nav />
+      <Main />
+      <Highlightspecials />
+    </>
   );
 }
 
