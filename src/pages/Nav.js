@@ -18,18 +18,18 @@ export default class Nav extends Component {
           style={{
             border: '5px',
             top: '15px',
-            left: '375px',
+            left: '450px',
             position: 'absolute',
           }}
         >
-          <img src={logo} width='170' height={50} alt=''></img>
+          <img src={logo} width='170px' height={50} alt=''></img>
         </span>
         <div
           style={{
             height: '100%',
             border: '5px',
             top: '10px',
-            left: '850px',
+            left: '830px',
             position: 'absolute',
           }}
         >

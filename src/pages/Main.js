@@ -13,7 +13,7 @@ export default class Main extends Component {
           position: 'relative',
         }}
       >
-        <div style={{ position: 'absolute', left: '25%' }}>
+        <div style={{ position: 'absolute', left: '31%' }}>
           <p
             style={{
               fontSize: '18px',
@@ -39,7 +39,7 @@ export default class Main extends Component {
               fontSize: '10px',
               maxWidth: '22ch',
               padding: '0',
-              marginBottom: '5px',
+              marginBottom: '8px',
             }}
           >
             We are family owned Meditrannean restaurant, focus on traditional
@@ -47,9 +47,11 @@ export default class Main extends Component {
           </h6>
           <button
             style={{
+              width: '120px',
+              height: '30px',
               padding: '0',
               backgroundColor: '#F4CE14',
-              borderRadius: '8px',
+              borderRadius: '10px',
             }}
           >
             Reserve a Table
@@ -59,19 +61,13 @@ export default class Main extends Component {
           style={{
             position: 'absolute',
             marginTop: '20px',
-            left: '64%',
+            left: '61%',
             borderRadius: '15px',
             display: 'inline-block',
             overflow: 'hidden',
           }}
         >
-          <img
-            src={logo}
-            width='190px'
-            height='220px'
-            borderRadius='35px'
-            alt='hey'
-          ></img>
+          <img src={logo} width='190px' height='220px' alt='hey'></img>
         </div>
       </div>
     );

@@ -8,7 +8,9 @@ export const foodList = [
   },
   {
     title: 'Greek Salad',
-    description: 'The famous greek salad of crispy letture',
+    description:
+      'Our Brucheta is made from grilled bread that has been seared with garlic and seasoned with salt ' +
+      'and olive oil',
     imageName: 'restauranfood.jpg',
   },
   {

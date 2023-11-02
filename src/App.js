@@ -1,14 +1,18 @@
 import './App.css';
-import Main from './pages/Main';
-import Nav from './pages/Nav';
-import Highlightspecials from './pages/Highlightspecials';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import PageNotFound from './pages/PageNotFound';
 
 function App() {
   return (
     <>
-      <Nav />
-      <Main />
-      <Highlightspecials />
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path='/' element={<Home />} />
+          <Route path='*' element={<PageNotFound />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
