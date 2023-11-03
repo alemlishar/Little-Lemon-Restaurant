@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import logo from './../assets/lemmon.png';
 import './../style.css';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import Home from './Home';
 
 export default class Nav extends Component {
   render() {
@@ -42,7 +44,9 @@ export default class Nav extends Component {
                 fontWeight: 'bolder',
               }}
             >
-              Home
+              <Link style={{ textDecoration: 'none' }} to='/'>
+                Home
+              </Link>
             </li>
             <li
               style={{
@@ -72,7 +76,9 @@ export default class Nav extends Component {
                 fontWeight: 'bold',
               }}
             >
-              Reservations
+              <Link style={{ textDecoration: 'none' }} to='/booking'>
+                Reservation
+              </Link>
             </li>
             <li
               style={{
