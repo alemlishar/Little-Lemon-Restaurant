@@ -2,11 +2,11 @@ import React from "react"
 import greekSalad from "./../assets/greek salad.jpg"
 import lemoDesert from "./../assets/lemon dessert.jpg"
 import bruchetta from "./../assets/bruchetta.png"
-import specialDatas from "./../assets/Special-food-list"
-import specialFood from "./SpecialFood"
+//import specialDatas from "./../assets/Special-food-list"
+//import specialFood from "./SpecialFood"
 
 export default function Highlightspecials() {
-  const specialFoods = specialDatas.map((data) => <specialFood item={data} />)
+  //const specialFoods = specialDatas.map((data) => <specialFood item={data} />)
 
   return (
     <div
@@ -39,7 +39,7 @@ export default function Highlightspecials() {
             marginTop: "30px",
             borderColor: "#F4CE14",
             backgroundColor: "#F4CE14",
-            borderRadius: "8px",
+            borderradius: "8px",
             width: "140px",
             height: "35px",
             position: "absolute",
@@ -73,7 +73,7 @@ export default function Highlightspecials() {
             width="200px"
             height="160px"
             alt=""
-            borderRadius="10px"
+            borderradius="10px"
           ></img>
           <span
             style={{
@@ -142,7 +142,7 @@ export default function Highlightspecials() {
             width="200px"
             height="160px"
             alt=""
-            borderRadius="10px"
+            borderradius="10px"
           ></img>
           <span
             style={{
@@ -211,7 +211,7 @@ export default function Highlightspecials() {
             src={lemoDesert}
             width="200px"
             height="160px"
-            borderRadius="10px"
+            borderradius="10px"
             alt=""
           ></img>
           <span

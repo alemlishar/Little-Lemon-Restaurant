@@ -1,7 +1,53 @@
-import React from "react"
+import React, { useState } from "react"
+
+const bookingTimeSlots = ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"]
 
 export default function BookingForm() {
-  const handleSubmit = function () {}
+  const [bookData, setBookData] = useState({
+    bookingDate: "",
+    bookingTime: "",
+    numberOfGuest: "",
+    occasion: "",
+  })
+  const [isActive, setActive] = useState(false)
+
+  function handleDate(e) {
+    setBookData({
+      ...bookData,
+      bookingDate: e.target.value,
+    })
+  }
+
+  function handleTime(e) {
+    setBookData({
+      ...bookData,
+      bookingTime: e.target.value,
+    })
+  }
+
+  function handleOcassion(e) {
+    setBookData({
+      ...bookData,
+      occasion: e.target.value,
+    })
+  }
+  function handleNumGuest(e) {
+    setBookData({
+      ...bookData,
+      numberOfGuest: e.target.value,
+    })
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault()
+  }
+  const bookingTimeOptions = bookingTimeSlots.map((time, index) => {
+    return (
+      <option key={time} value={time}>
+        {time}
+      </option>
+    )
+  })
 
   return (
     <div
@@ -10,8 +56,8 @@ export default function BookingForm() {
         position: "relative",
         left: "31%",
         width: "650px",
-        height: "50%",
-        borderRadius: "20px",
+        height: "100%",
+        borderRadius: "5px",
         fontSize: "16px",
         color: "#495e57",
         fontWeight: "bold",
@@ -28,6 +74,9 @@ export default function BookingForm() {
         <input
           type="date"
           id="res-date"
+          value={bookData.bookingDate}
+          name="bookingDate"
+          onChange={handleDate}
           style={{
             marginLeft: "20px",
             height: "25px",
@@ -57,6 +106,7 @@ export default function BookingForm() {
               marginTop: "20px",
             }}
             type="submit"
+            disabled={isActive}
           >
             Make a reservation
           </button>
@@ -74,14 +124,12 @@ export default function BookingForm() {
             borderRadius: "10px",
             marginBottom: "10px",
           }}
-          id="res-time "
+          id="res-time"
+          value={bookData.bookingTime}
+          name="bookingTime"
+          onChange={handleTime}
         >
-          <option>17:00</option>
-          <option>18:00</option>
-          <option>19:00</option>
-          <option>20:00</option>
-          <option>21:00</option>
-          <option>22:00</option>
+          {bookingTimeOptions}
         </select>
         <br />
         <label htmlFor="guests">Number of guests</label> <br />
@@ -94,12 +142,13 @@ export default function BookingForm() {
             marginTop: "10px",
             marginBottom: "10px",
           }}
-          type="number"
           placeholder="1"
-          min="1"
-          max="10"
+          type="number"
+          value={bookData.numberOfGuest}
+          name="numberOfGuest"
           id="guests"
-        ></input>
+          onChange={handleNumGuest}
+        />
         <br />
         <label htmlFor="occasion">Occasion</label> <br />
         <select
@@ -112,9 +161,12 @@ export default function BookingForm() {
             marginTop: "10px",
           }}
           id="occasion"
+          value={bookData.occasion}
+          name="occasion"
+          onChange={handleOcassion}
         >
-          <option>Birthday</option>
-          <option>Anniversary</option>
+          <option value="Birthday">Birthday</option>
+          <option value="Anniversary">Anniversary</option>
         </select>
       </form>
     </div>

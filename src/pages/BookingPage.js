@@ -1,16 +1,11 @@
-import React, { Component, useState } from 'react';
-import Nav from './Nav';
-import Main from './Main';
-import BookingForm from './BookingForm';
+import React from "react"
 
-export default class BookingPage extends Component {
-  render() {
-    return (
-      <>
-        <Nav />
-        <Main />
-        <BookingForm />
-      </>
-    );
-  }
+import BookingForm from "./BookingForm"
+
+export default function BookingPage() {
+  return (
+    <>
+      <BookingForm />
+    </>
+  )
 }
