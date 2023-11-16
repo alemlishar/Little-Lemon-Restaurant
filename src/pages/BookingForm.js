@@ -1,116 +1,122 @@
-import React, { Component } from 'react';
+import React from "react"
 
-export default class BookingForm extends Component {
-  handleSubmit(event) {
-    return null;
-  }
-  render() {
-    return (
-      <div
-        style={{
-          marginTop: '50px',
-          position: 'absolute',
-          left: '31%',
-          width: '650px',
-          height: '50%',
-          border: '2px solid #F4CE14',
-          borderRadius: '20px',
-        }}
+export default function BookingForm() {
+  const handleSubmit = function () {}
+
+  return (
+    <div
+      style={{
+        marginTop: "50px",
+        position: "relative",
+        left: "31%",
+        width: "650px",
+        height: "50%",
+        borderRadius: "20px",
+        fontSize: "16px",
+        color: "#495e57",
+        fontWeight: "bold",
+        border: "0.1px solid #495e57",
+      }}
+    >
+      <h2 style={{ color: "#495e57" }}>Booking Form</h2>
+      <form
+        style={{ marginTop: "25px", marginLeft: "2px" }}
+        onSubmit={handleSubmit}
       >
-        <form
-          style={{ marginTop: '50px', marginLeft: '20px' }}
-          onSubmit={this.handleSubmit}
+        <label htmlFor="res-date">Choose date</label>
+        <br />
+        <input
+          type="date"
+          id="res-date"
+          style={{
+            marginLeft: "20px",
+            height: "25px",
+            width: "250px",
+            marginTop: "10px",
+            marginBottom: "10px",
+            borderRadius: "10px",
+          }}
+        />
+        <br />
+        <div
+          style={{
+            position: "absolute",
+            marginLeft: "350px",
+            marginTop: "30px",
+            left: "1%",
+          }}
         >
-          <span
-            style={{
-              fontSize: '16px',
-              color: '#495e57',
-              fontWeight: 'bold',
-            }}
-          >
-            <label for='res-date'>Choose date</label>
-            <input
-              type='date'
-              id='res-date'
-              style={{ marginLeft: '20px', width: '200px' }}
-            />
-          </span>
-          <br />
-          <span
-            style={{
-              marginTop: '20px',
-              fontSize: '16px',
-              color: '#495e57',
-              fontWeight: 'bold',
-            }}
-          >
-            <label for='res-time'>Choose time</label>
-            <select
-              style={{ marginLeft: '20px', width: '200px' }}
-              id='res-time '
-            >
-              <option>17:00</option>
-              <option>18:00</option>
-              <option>19:00</option>
-              <option>20:00</option>
-              <option>21:00</option>
-              <option>22:00</option>
-            </select>
-          </span>
-          <br />
-          <span
-            style={{
-              marginBottom: '100px',
-              fontSize: '16px',
-              color: '#495e57',
-              fontWeight: 'bold',
-            }}
-          >
-            <label for='guests'>Number of guests</label>
-            <input
-              style={{ marginLeft: '20px', width: '200px' }}
-              type='number'
-              placeholder='1'
-              min='1'
-              max='10'
-              id='guests'
-            ></input>
-          </span>
-          <br />
-          <span
-            style={{
-              marginBottom: '20px',
-              fontSize: '16px',
-              color: '#495e57',
-              fontWeight: 'bold',
-            }}
-          >
-            <label for='occasion'>Occasion</label>
-            <select
-              style={{ marginLeft: '20px', width: '200px' }}
-              id='occasion'
-            >
-              <option>Birthday</option>
-              <option>Anniversary</option>
-            </select>
-          </span>
-          <br />
           <button
             style={{
-              width: '135px',
-              height: '35px',
-              padding: '0',
-              backgroundColor: '#F4CE14',
-              borderRadius: '8px',
-              marginLeft: '100px',
-              marginTop: '20px',
+              width: "135px",
+              height: "35px",
+              padding: "0",
+              backgroundColor: "#F4CE14",
+              borderRadius: "8px",
+              marginLeft: "100px",
+              marginTop: "20px",
             }}
-            type='submit'
+            type="submit"
           >
             Make a reservation
           </button>
-        </form>
-      </div>
-    );
-  }
+        </div>
+        <label htmlFor="res-time" style={{ marginTop: "30px" }}>
+          Choose time
+        </label>
+        <br />
+        <select
+          style={{
+            marginTop: "10px",
+            marginLeft: "20px",
+            height: "35px",
+            width: "250px",
+            borderRadius: "10px",
+            marginBottom: "10px",
+          }}
+          id="res-time "
+        >
+          <option>17:00</option>
+          <option>18:00</option>
+          <option>19:00</option>
+          <option>20:00</option>
+          <option>21:00</option>
+          <option>22:00</option>
+        </select>
+        <br />
+        <label htmlFor="guests">Number of guests</label> <br />
+        <input
+          style={{
+            marginLeft: "20px",
+            height: "30px",
+            width: "250px",
+            borderRadius: "10px",
+            marginTop: "10px",
+            marginBottom: "10px",
+          }}
+          type="number"
+          placeholder="1"
+          min="1"
+          max="10"
+          id="guests"
+        ></input>
+        <br />
+        <label htmlFor="occasion">Occasion</label> <br />
+        <select
+          style={{
+            marginLeft: "20px",
+            height: "35px",
+            width: "255px",
+            borderRadius: "10px",
+            marginBottom: "10px",
+            marginTop: "10px",
+          }}
+          id="occasion"
+        >
+          <option>Birthday</option>
+          <option>Anniversary</option>
+        </select>
+      </form>
+    </div>
+  )
 }
