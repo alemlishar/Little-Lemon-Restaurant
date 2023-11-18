@@ -3,7 +3,7 @@ body {
   font-family: poppins;
 }
 
-.navmain {
+.nav-main-container {
   border: 2px;
   padding: 10;
   height: 80px;
@@ -11,13 +11,13 @@ body {
   position: relative;
 }
 
-.nav-logo {
+.nav-logo-container {
   border: 5px;
   top: 15px;
   left: 450px;
   position: absolute;
 }
-.nav-menu {
+.nav-menu-container {
   height: 100%;
   border: 5px;
   top: 10px;
@@ -26,12 +26,12 @@ body {
 }
 .nav-menu-li {
   display: inline;
-  margin-left: -80px;
+  margin-left: 20px;
   font-size: 12px;
   font-weight: bolder;
 }
 
-.main {
+.main-container {
   border: 2px;
   background-color: #495e57;
   height: 200px;
@@ -39,24 +39,45 @@ body {
   position: relative;
 }
 
-.main-button {
+.main-title {
+  font-size: 18px;
+  color: #f4ce14;
+  margin-bottom: 2px;
+}
+
+.main-chicago {
+  padding: 0;
+  margin-bottom: 1px;
+  font-size: 16px;
+  color: white;
+}
+
+.main-about {
+  color: white;
+  font-size: 11px;
+  max-width: 22ch;
+  padding: 0;
+  margin-bottom: 11px;
+}
+
+.main-reserve-button {
   width: 120px;
-  height: 30px;
+  height: 40px;
   padding: 0;
   background-color: #f4ce14;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
 .main-logo {
   position: absolute;
   margin-top: 20px;
   left: 61%;
-  border-radius: 15px;
+  border-radius: 10px;
   display: inline-block;
   overflow: hidden;
 }
 
-.highlight-main {
+.highlight-main-container {
   width: 100%;
   margin-top: 40px;
   height: 600px;
@@ -64,14 +85,14 @@ body {
   position: relative;
 }
 
-.highlight-paragraph {
+.highlight-special-paragraph {
   left: 31%;
   font-size: 28px;
   font-weight: bold;
   position: absolute;
 }
 
-.highlight-button {
+.highlight-order-button {
   margin-top: 30px;
   border-color: #f4ce14;
   background-color: #f4ce14;
@@ -80,6 +101,13 @@ body {
   height: 35px;
   position: absolute;
   left: 64%;
+}
+
+.highlight-specialbox-container {
+  height: 400px;
+  border: 20px;
+  position: absolute;
+  left: 31%;
 }
 
 .highlight-cart-container {
@@ -124,4 +152,52 @@ body {
   margin-right: 5px;
   font-size: 10px;
   font-weight: bold;
+}
+
+.booking-form-container {
+  margin-top: 70px;
+  position: relative;
+  left: 30%;
+  width: 650px;
+  height: 100%;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #495e57;
+  font-weight: bold;
+  border: 7px solid #495e57;
+}
+
+.booking-form-input {
+  margin-left: 20px;
+  height: 25px;
+  width: 250px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+.booking-button-container {
+  position: absolute;
+  margin-left: 350px;
+  margin-top: 30px;
+  left: 1%;
+}
+
+.booking-form-button {
+  width: 135px;
+  height: 35px;
+  padding: 0;
+  background-color: #f4ce14;
+  border-radius: 5px;
+  margin-left: 112px;
+  margin-top: 5px;
+}
+
+.booking-time-options {
+  margin-top: 10px;
+  margin-left: 20px;
+  height: 35px;
+  width: 250px;
+  border-radius: 10px;
+  margin-bottom: 10px;
 }

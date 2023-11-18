@@ -50,7 +50,10 @@ export default function Highlightspecials() {
         </button>
       </div>
       <div
+        id="special container"
         style={{
+          display: "flex",
+          flexDirection: "row",
           height: "400px",
           border: "20px",
           position: "absolute",

@@ -5,7 +5,7 @@ import BookingPage from "./pages/BookingPage"
 import Nav from "./pages//Nav"
 import Main from "./pages/Main"
 import PageNotFound from "./pages/PageNotFound"
-
+import ConfirmedBooking from "./pages/ConfirmedBooking"
 function App() {
   return (
     <>
@@ -16,6 +16,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/" element={<Home />} />
           <Route path="booking" element={<BookingPage />} />
+          <Route path="confirmedbook" element={<ConfirmedBooking />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
