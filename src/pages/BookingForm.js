@@ -49,12 +49,13 @@ const availableTimesByDate = {
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 export default function BookingForm() {
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   const [loaded, error] = useScript(
     "https://raw.githubusercontent.com/Meta-Front-End-Developer-PC/capstone/master/api.js"
   )
 
   const [bookTimes, setBookTimes] = useState()
+  const [isActive, setActive] = useState(false)
 
   const formik = useFormik({
     initialValues: {
@@ -66,7 +67,9 @@ export default function BookingForm() {
     validationSchema: Yup.object({
       bookingDate: Yup.string().required("Required"),
       bookingTime: Yup.string().required("Required"),
-      numberOfGuest: Yup.number().required("Required").min(1),
+      numberOfGuest: Yup.number()
+        .required("Required")
+        .min(1, "Guest should be atleast 1"),
       occasion: Yup.string()
         .required("Required")
         .test("len", "please Choose", (val) => val.length !== 6),
@@ -76,7 +79,7 @@ export default function BookingForm() {
       const response = submitForm(formik.values)
       response.then(
         function (value) {
-          navigate("/confirmedbook")
+          // navigate("/confirmedbook")
         },
         function (error) {}
       )
@@ -90,19 +93,8 @@ export default function BookingForm() {
   }, [formik.values.bookingDate])
 
   React.useEffect(() => {
-    if (!loaded) {
-      console.log("not loaded sucessfully")
-      return
-    } else {
-      console.log(useScript.state)
-    }
-  }, [loaded, error])
-
-  React.useEffect(() => {
     initializeTimes()
   }, [])
-
-  const [isActive, setActive] = useState(false)
 
   const initializeTimes = () => {
     const date = new Date()
@@ -164,7 +156,7 @@ export default function BookingForm() {
 
   return (
     <div className="booking-form-container">
-      <h2 style={{ color: "#495e57", marginLeft: "5px" }}>
+      <h2 id="BookingText" style={{ color: "#495e57", marginLeft: "5px" }}>
         Booking Table Form
       </h2>
 
@@ -172,9 +164,10 @@ export default function BookingForm() {
         style={{ marginTop: "25px", marginLeft: "15px" }}
         onSubmit={formik.handleSubmit}
       >
-        <label htmlFor="res-date">Choose date</label>
+        <label>Choose date</label>
         <br />
         <input
+          data-testid="bookingDate"
           id="bookingDate"
           name="bookingDate"
           type="date"
@@ -191,6 +184,7 @@ export default function BookingForm() {
         <br />
         <div className="booking-button-container">
           <button
+            id="reservation"
             className="booking-form-button"
             type="submit"
             disabled={
@@ -203,11 +197,10 @@ export default function BookingForm() {
             Make a reservation
           </button>
         </div>
-        <label htmlFor="res-time" style={{ marginTop: "30px" }}>
-          Choose time
-        </label>
+        <label style={{ marginTop: "30px" }}>Choose time</label>
         <br />
         <select
+          data-testid="bookingTime"
           className="booking-time-options"
           id="bookingTime"
           name="bookingTime"
@@ -224,8 +217,9 @@ export default function BookingForm() {
           </div>
         ) : null}
         <br />
-        <label htmlFor="guests">Number of guests</label> <br />
+        <label>Number of guests</label> <br />
         <input
+          data-testid="bookingGuest"
           className="booking-form-input"
           placeholder="0"
           type="number"
