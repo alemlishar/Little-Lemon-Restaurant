@@ -43,6 +43,7 @@
     ]
   },
   "devDependencies": {
-    "case-sensitive-paths-webpack-plugin": "^2.4.0"
+    "case-sensitive-paths-webpack-plugin": "^2.4.0",
+    "jest": "^27.5.1"
   }
 }

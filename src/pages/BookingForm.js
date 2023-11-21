@@ -1,8 +1,8 @@
 import React, { useState } from "react"
-import * as Yup from "yup"
-import { useFormik, Field, Form, Formik, FormikProps } from "formik"
 import { useNavigate } from "react-router-dom"
 import useScript from "../assets/UseScripts"
+import { ErrorMessage } from "formik"
+
 const bookingTimeSlots = [
   "00:00",
   "17:00",
@@ -48,49 +48,27 @@ const availableTimesByDate = {
 }
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
-export default function BookingForm() {
+export default function BookingForm({ onSubmit }) {
   // const navigate = useNavigate()
   const [loaded, error] = useScript(
     "https://raw.githubusercontent.com/Meta-Front-End-Developer-PC/capstone/master/api.js"
   )
 
   const [bookTimes, setBookTimes] = useState()
-  const [isActive, setActive] = useState(false)
 
-  const formik = useFormik({
-    initialValues: {
-      bookingDate: "",
-      bookingTime: "",
-      numberOfGuest: "",
-      occasion: "",
-    },
-    validationSchema: Yup.object({
-      bookingDate: Yup.string().required("Required"),
-      bookingTime: Yup.string().required("Required"),
-      numberOfGuest: Yup.number()
-        .required("Required")
-        .min(1, "Guest should be atleast 1"),
-      occasion: Yup.string()
-        .required("Required")
-        .test("len", "please Choose", (val) => val.length !== 6),
-    }),
-    validateOnBlur: true,
-    onSubmit: (values) => {
-      const response = submitForm(formik.values)
-      response.then(
-        function (value) {
-          // navigate("/confirmedbook")
-        },
-        function (error) {}
-      )
-    },
+  const [bookData, setBookData] = useState({
+    bookingDate: "",
+    bookingTime: "",
+    numberOfGuest: "",
+    occasion: "",
   })
-
-  React.useEffect(() => {
-    if (formik.values.bookingDate) {
-      updateTimes(formik.values.bookingDate)
-    } else initializeTimes()
-  }, [formik.values.bookingDate])
+  const [errors, setErrors] = useState({
+    bookingDate: "",
+    bookingTime: "",
+    numberOfGuest: "",
+    occasion: "",
+  })
+  const [isActive, setActive] = useState(false)
 
   React.useEffect(() => {
     initializeTimes()
@@ -105,7 +83,10 @@ export default function BookingForm() {
     response.then(
       function (value) {
         setBookTimes(value)
-        formik.values.bookingDate = today
+        setBookData({
+          ...bookData,
+          bookingDate: today,
+        })
       },
       function (error) {}
     )
@@ -113,12 +94,8 @@ export default function BookingForm() {
     return bookTimes
   }
 
-  const outPut = () => {
-    const data = initializeTimes()
-  }
-
   const updateTimes = (date) => {
-    const response = fetchApi(formik.values.bookingDate)
+    const response = fetchApi(date)
     response.then(
       function (value) {
         setBookTimes(value)
@@ -139,7 +116,7 @@ export default function BookingForm() {
     console.log("submitted date:" + formData.bookingDate)
     const randomNumber = Math.random()
     console.log("random Number:" + randomNumber)
-    await wait(1000)
+    await wait(2000)
     return new Promise((resolve, reject) => {
       if (randomNumber < 0.5) reject(new Error("Form submission failed"))
       else resolve(true)
@@ -154,85 +131,151 @@ export default function BookingForm() {
     )
   })
 
+  function handleSubmit(event) {
+    event.preventDefault()
+    onSubmit(bookData)
+    const response = submitForm(bookData)
+    response.then(
+      function (value) {
+        //navigate("/confirmedbook")
+        console.log("clicked")
+      },
+      function (error) {
+        console.log("clicked")
+      }
+    )
+  }
+
+  const DateValidation = (msg) => {
+    setErrors({
+      ...errors,
+      bookingDate: msg,
+    })
+  }
+  const guestNumberValidation = (msg) => {
+    setErrors({
+      ...errors,
+      numberOfGuest: msg,
+    })
+  }
+
+  const ocassionValidation = (msg) => {
+    setErrors({
+      ...errors,
+      occasion: msg,
+    })
+  }
+
+  async function handleDate(e) {
+    console.log("new date:" + e.target.value)
+    let errorMessage
+    setBookData({
+      ...bookData,
+      bookingDate: e.target.value,
+    })
+    if (e.target.value) {
+      errorMessage = ""
+      updateTimes(e.target.value)
+    } else {
+      setBookTimes(bookingTimeSlots)
+      errorMessage = "Invalid date"
+    }
+    DateValidation(errorMessage)
+  }
+
+  function handleTime(e) {
+    setBookData({
+      ...bookData,
+      bookingTime: e.target.value,
+    })
+  }
+
+  function handleOcassion(e) {
+    let errorMessage
+    setBookData({
+      ...bookData,
+      occasion: e.target.value,
+    })
+
+    if (e.target.value === "select") errorMessage = "Specify ocassion type"
+    else errorMessage = ""
+    ocassionValidation(errorMessage)
+  }
+
+  function handleNumGuest(e) {
+    let errorMessage
+    setBookData({
+      ...bookData,
+      numberOfGuest: e.target.value,
+    })
+    if (e.target.value == 0) errorMessage = "Atleast 1 guest required"
+    else errorMessage = ""
+
+    guestNumberValidation(errorMessage)
+  }
+
   return (
     <div className="booking-form-container">
-      <h2 id="BookingText" style={{ color: "#495e57", marginLeft: "5px" }}>
+      <h2 style={{ color: "#495e57", marginLeft: "5px" }}>
         Booking Table Form
       </h2>
-
       <form
+        data-testid="formbook"
+        onSubmit={handleSubmit}
         style={{ marginTop: "25px", marginLeft: "15px" }}
-        onSubmit={formik.handleSubmit}
       >
-        <label>Choose date</label>
+        <label htmlFor="res-date">Choose date</label>
         <br />
         <input
-          data-testid="bookingDate"
-          id="bookingDate"
-          name="bookingDate"
           type="date"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.bookingDate}
+          data-testid="bookingDate"
+          id="res-date"
+          value={bookData.bookingDate}
+          name="bookingDate"
+          onChange={handleDate}
           className="booking-form-input"
         />
-        {formik.errors.bookingDate ? (
+        {errors.bookingDate ? (
           <div style={{ display: "inline", color: "red", marginLeft: "10px" }}>
-            {formik.errors.bookingDate}
+            {errors.bookingDate}
           </div>
         ) : null}
         <br />
         <div className="booking-button-container">
-          <button
-            id="reservation"
-            className="booking-form-button"
-            type="submit"
-            disabled={
-              formik.errors.bookingDate ||
-              formik.errors.bookingTime ||
-              formik.errors.numberOfGuest ||
-              formik.errors.occasion
-            }
-          >
+          <button className="booking-form-button" type="submit">
             Make a reservation
           </button>
         </div>
-        <label style={{ marginTop: "30px" }}>Choose time</label>
+        <label htmlFor="res-time" style={{ marginTop: "30px" }}>
+          Choose time
+        </label>
         <br />
         <select
-          data-testid="bookingTime"
           className="booking-time-options"
-          id="bookingTime"
+          data-testid="bookingTime"
+          id="res-time"
+          value={bookData.bookingTime}
           name="bookingTime"
-          type="date"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.bookingTime}
+          onChange={handleTime}
         >
           {bookingTimeOptions}
         </select>
-        {formik.errors.bookingTime ? (
-          <div style={{ display: "inline", color: "red", marginLeft: "10px" }}>
-            {formik.errors.bookingTime}
-          </div>
-        ) : null}
         <br />
-        <label>Number of guests</label> <br />
+        <label htmlFor="guests">Number of guests</label> <br />
         <input
-          data-testid="bookingGuest"
           className="booking-form-input"
+          data-testid="bookingGuest"
           placeholder="0"
-          type="number"
-          id="numberOfGuest"
           min={0}
+          type="number"
+          value={bookData.numberOfGuest}
           name="numberOfGuest"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.numberOfGuest}
+          id="guests"
+          onChange={handleNumGuest}
         />
-        {formik.errors.numberOfGuest ? (
+        {errors.numberOfGuest ? (
           <div style={{ display: "inline", color: "red", marginLeft: "10px" }}>
-            {formik.errors.numberOfGuest}
+            {errors.numberOfGuest}
           </div>
         ) : null}
         <br />
@@ -244,18 +287,17 @@ export default function BookingForm() {
             width: "255px",
           }}
           id="occasion"
+          value={bookData.occasion}
           name="occasion"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.occasion}
+          onChange={handleOcassion}
         >
           <option value="select">--Select--</option>
           <option value="Birthday">Birthday</option>
           <option value="Anniversary">Anniversary</option>
         </select>
-        {formik.errors.occasion ? (
+        {errors.occasion ? (
           <div style={{ display: "inline", color: "red", marginLeft: "10px" }}>
-            {formik.errors.occasion}
+            {errors.occasion}
           </div>
         ) : null}
       </form>
