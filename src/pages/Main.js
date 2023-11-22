@@ -66,19 +66,6 @@ export default function Main() {
     return availableTimes
   }
 
-  const submitForm = async (formData) => {
-    availableTimesByDate[formData.date] = availableTimesByDate[
-      formData.date
-    ].filter((time) => time !== formData.time)
-
-    const randomNumber = Math.random()
-    await wait(2000)
-    return new Promise((resolve, reject) => {
-      if (randomNumber < 0.8) reject(new Error("Form submission failed"))
-      else resolve(true)
-    })
-  }
-
   return (
     <div className="main-container">
       <div style={{ position: "absolute", left: "31%" }}>

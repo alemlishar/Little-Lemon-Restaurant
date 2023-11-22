@@ -48,7 +48,7 @@ const availableTimesByDate = {
 }
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
-export default function BookingForm({ onSubmit }) {
+export default function BookingForm({ submitForm }) {
   // const navigate = useNavigate()
   const [loaded, error] = useScript(
     "https://raw.githubusercontent.com/Meta-Front-End-Developer-PC/capstone/master/api.js"
@@ -62,15 +62,19 @@ export default function BookingForm({ onSubmit }) {
     numberOfGuest: "",
     occasion: "",
   })
+
   const [errors, setErrors] = useState({
     bookingDate: "",
-    bookingTime: "",
+    bookingTime: "error",
     numberOfGuest: "",
     occasion: "",
   })
   const [isActive, setActive] = useState(false)
 
   React.useEffect(() => {
+    console.log("date:" + (errors.bookingDate === ""))
+    console.log("numberOfGuest:" + (errors.numberOfGuest === ""))
+    console.log("occasion:" + (errors.occasion === ""))
     initializeTimes()
   }, [])
 
@@ -85,6 +89,7 @@ export default function BookingForm({ onSubmit }) {
         setBookTimes(value)
         setBookData({
           ...bookData,
+          bookingTime: value[0],
           bookingDate: today,
         })
       },
@@ -112,17 +117,6 @@ export default function BookingForm({ onSubmit }) {
     })
   }
 
-  const submitForm = async (formData) => {
-    console.log("submitted date:" + formData.bookingDate)
-    const randomNumber = Math.random()
-    console.log("random Number:" + randomNumber)
-    await wait(2000)
-    return new Promise((resolve, reject) => {
-      if (randomNumber < 0.5) reject(new Error("Form submission failed"))
-      else resolve(true)
-    })
-  }
-
   const bookingTimeOptions = bookTimes?.map((time, index) => {
     return (
       <option key={time} value={time}>
@@ -133,54 +127,64 @@ export default function BookingForm({ onSubmit }) {
 
   function handleSubmit(event) {
     event.preventDefault()
-    onSubmit(bookData)
-    const response = submitForm(bookData)
-    response.then(
-      function (value) {
-        //navigate("/confirmedbook")
-        console.log("clicked")
-      },
-      function (error) {
-        console.log("clicked")
-      }
+    console.log("isError:" + isError())
+
+    submitForm(bookData)
+  }
+
+  const isError = () => {
+    setActive(
+      errors.bookingDate === "" && errors.occasion === "" && errors.book === ""
     )
+    return isActive
   }
 
-  const DateValidation = (msg) => {
+  const DateValidation = (value) => {
+    let errorMessage
+    if (value) {
+      errorMessage = ""
+    } else {
+      errorMessage = "Invalid date"
+    }
     setErrors({
       ...errors,
-      bookingDate: msg,
+      bookingDate: errorMessage,
     })
+    isError()
   }
-  const guestNumberValidation = (msg) => {
+  const guestNumberValidation = (value) => {
+    let errorMessage
+    if (value === 0) errorMessage = "Atleast 1 guest required"
+    else errorMessage = ""
     setErrors({
       ...errors,
-      numberOfGuest: msg,
+      numberOfGuest: errorMessage,
     })
+    isError()
   }
 
-  const ocassionValidation = (msg) => {
+  const ocassionValidation = (value) => {
+    let errorMessage
+    if (value === "select") errorMessage = "Specify ocassion type"
+    else errorMessage = ""
     setErrors({
       ...errors,
-      occasion: msg,
+      occasion: errorMessage,
     })
+    isError()
   }
 
   async function handleDate(e) {
-    console.log("new date:" + e.target.value)
-    let errorMessage
     setBookData({
       ...bookData,
       bookingDate: e.target.value,
     })
     if (e.target.value) {
-      errorMessage = ""
       updateTimes(e.target.value)
     } else {
       setBookTimes(bookingTimeSlots)
-      errorMessage = "Invalid date"
     }
-    DateValidation(errorMessage)
+    DateValidation(e.target.value)
   }
 
   function handleTime(e) {
@@ -191,27 +195,19 @@ export default function BookingForm({ onSubmit }) {
   }
 
   function handleOcassion(e) {
-    let errorMessage
     setBookData({
       ...bookData,
       occasion: e.target.value,
     })
-
-    if (e.target.value === "select") errorMessage = "Specify ocassion type"
-    else errorMessage = ""
-    ocassionValidation(errorMessage)
+    ocassionValidation(e.target.value)
   }
 
   function handleNumGuest(e) {
-    let errorMessage
     setBookData({
       ...bookData,
       numberOfGuest: e.target.value,
     })
-    if (e.target.value == 0) errorMessage = "Atleast 1 guest required"
-    else errorMessage = ""
-
-    guestNumberValidation(errorMessage)
+    guestNumberValidation(e.target.value)
   }
 
   return (
@@ -242,7 +238,18 @@ export default function BookingForm({ onSubmit }) {
         ) : null}
         <br />
         <div className="booking-button-container">
-          <button className="booking-form-button" type="submit">
+          <button
+            className="booking-form-button"
+            type="submit"
+            disabled={
+              bookData.bookingTime === "" ||
+              bookData.bookingDate === "" ||
+              bookData.numberOfGuest === 0 ||
+              bookData.bookingDate === "" ||
+              bookData.occasion === "select" ||
+              bookData.occasion === ""
+            }
+          >
             Make a reservation
           </button>
         </div>
@@ -266,7 +273,7 @@ export default function BookingForm({ onSubmit }) {
           className="booking-form-input"
           data-testid="bookingGuest"
           placeholder="0"
-          min={0}
+          min={1}
           type="number"
           value={bookData.numberOfGuest}
           name="numberOfGuest"
