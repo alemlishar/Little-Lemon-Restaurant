@@ -44,20 +44,23 @@ const reducer = (prevState, action) => {
       return {
         ...prevState,
         timeValue: action.val,
-        edit: prevState.edit + 1,
       }
     case "initializeTime":
       return {
         ...prevState,
         timeValue: action.val,
-        edit: prevState.edit + 1,
       }
   }
 }
 
 const initialState = {
   timeValue: bookingTimeSlots,
-  edit: 0,
+  date:
+    new Date().getFullYear() +
+    "-" +
+    (new Date().getMonth() + 1) +
+    "-" +
+    new Date().getDate(),
 }
 
 export default function BookingPage() {

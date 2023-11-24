@@ -34,7 +34,11 @@ export default function BookingForm({
 
   React.useEffect(() => {
     initializeTime()
-    console.log("available ist" + availableTime.timeValue[0])
+    setBookData({
+      ...bookData,
+      bookingDate: availableTime.date,
+      bookingTime: availableTime.timeValue[0],
+    })
   }, [])
 
   function handleSubmit(event) {
@@ -177,7 +181,7 @@ export default function BookingForm({
         <input
           className="booking-form-input"
           data-testid="bookingGuest"
-          placeholder="0"
+          placeholder="1"
           min={1}
           type="number"
           value={bookData.numberOfGuest}
