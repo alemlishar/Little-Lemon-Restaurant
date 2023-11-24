@@ -1,7 +1,8 @@
 import React, { useReducer, useState } from "react"
 import logo from "./../assets/restauranfood.jpg"
+import BookingForm from "./BookingForm"
 
-const availableTimesByDate = {
+export const availableTimesByDate = {
   "2023-08-29": ["10:00", "11:00", "12:00"],
   "2023-09-01": ["10:00", "11:00", "12:00"],
   "2023-09-02": ["14:00", "15:00", "16:00"],
@@ -37,14 +38,21 @@ const availableTimesByDate = {
 
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
-const bookingTimeSlots = ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"]
+export const bookingTimeSlots = [
+  "17:00",
+  "18:00",
+  "19:00",
+  "20:00",
+  "21:00",
+  "22:00",
+]
 const aboutParagraph =
   "   We are family owned Meditrannean restaurant, focus on traditional" +
   "recipes served with a modern twist."
 
 export default function Main() {
+  const [availableTime, dispatch] = useReducer(reducer, bookingTimeSlots)
   const [availableTimes, setAvailableTimes] = useState([])
-  const [availableTimess, dispatch] = useReducer(reducer, [])
 
   const fetchApi = async (date) => {
     console.log("selected Date:" + date)
@@ -57,13 +65,18 @@ export default function Main() {
     )
   }
 
-  function updateTimes(date) {
-    return dispatch({ type: "updateTimez" })
+  const initializeTimes = () => {
+    const date = new Date()
+    const today =
+      date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+
+    const response = fetchApi(today)
+
+    return ""
   }
 
-  function initializeTimes() {
-    setAvailableTimes(availableTimesByDate)
-    return availableTimes
+  const updateTimes = (date) => {
+    const response = fetchApi(date)
   }
 
   return (
@@ -82,7 +95,14 @@ export default function Main() {
 }
 
 const reducer = (state, action) => {
-  if (action.type === "updateTime") return bookingTimeSlots
-  if (action.type === "initializeTime") return []
-  return state
+  switch (action.type) {
+    case "updateTime": {
+      return {}
+    }
+    case "initializeTime": {
+      return {}
+    }
+  }
+
+  throw Error("Unknown action: " + action.type)
 }

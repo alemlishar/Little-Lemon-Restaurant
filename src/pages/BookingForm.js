@@ -3,52 +3,14 @@ import { useNavigate } from "react-router-dom"
 import useScript from "../assets/UseScripts"
 import { ErrorMessage } from "formik"
 
-const bookingTimeSlots = [
-  "00:00",
-  "17:00",
-  "18:00",
-  "19:00",
-  "20:00",
-  "21:00",
-  "22:00",
-]
-
-const availableTimesByDate = {
-  "2023-08-29": ["10:00", "11:00", "12:00"],
-  "2023-11-01": ["10:00", "11:00", "12:00"],
-  "2023-11-02": ["14:00", "15:00", "16:00"],
-  "2023-11-03": ["10:00", "11:00", "12:00"],
-  "2023-11-04": ["14:00", "15:00", "16:00"],
-  "2023-11-05": ["10:00", "11:00", "12:00"],
-  "2023-11-06": ["14:00", "15:00", "16:00"],
-  "2023-11-07": ["10:00", "11:00", "12:00"],
-  "2023-11-08": ["14:00", "15:00", "16:00"],
-  "2023-11-09": ["10:00", "11:00", "12:00"],
-  "2023-11-10": ["14:00", "15:00", "16:00"],
-  "2023-11-11": ["10:00", "11:00", "12:00"],
-  "2023-11-12": ["14:00", "15:00", "16:00"],
-  "2023-11-13": ["10:00", "11:00", "12:00"],
-  "2023-11-14": ["14:00", "15:00", "16:00"],
-  "2023-11-15": ["10:00", "11:00", "12:00"],
-  "2023-11-16": ["14:00", "15:00", "16:00"],
-  "2023-11-17": ["10:00", "11:00", "12:00"],
-  "2023-11-18": ["14:00", "15:00", "16:00"],
-  "2023-11-19": ["10:00", "11:00", "12:00"],
-  "2023-11-20": ["14:00", "15:00", "16:00"],
-  "2023-11-21": ["10:00", "11:00", "12:00"],
-  "2023-11-22": ["5:00", "15:00", "4:00"],
-  "2023-11-23": ["9:00", "8:00", "12:00"],
-  "2023-11-24": ["7:00", "4:00", "16:00"],
-  "2023-11-25": ["10:00", "11:00", "2:00"],
-  "2023-11-26": ["4:00", "5:00", "6:00"],
-  "2023-11-27": ["10:00", "11:00", "12:00"],
-  "2023-11-28": ["14:00", "15:00", "6:00"],
-  "2023-11-29": ["1:00", "12:00", "2:00"],
-  "2023-11-30": ["4:00", "5:00", "16:00"],
-}
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
-export default function BookingForm({ submitForm }) {
+export default function BookingForm({
+  submitForm,
+  availableTime,
+  initializeTime,
+  updateTime,
+}) {
   // const navigate = useNavigate()
   const [loaded, error] = useScript(
     "https://raw.githubusercontent.com/Meta-Front-End-Developer-PC/capstone/master/api.js"
@@ -69,74 +31,16 @@ export default function BookingForm({ submitForm }) {
     numberOfGuest: "",
     occasion: "",
   })
-  const [isActive, setActive] = useState(false)
 
   React.useEffect(() => {
-    console.log("date:" + (errors.bookingDate === ""))
-    console.log("numberOfGuest:" + (errors.numberOfGuest === ""))
-    console.log("occasion:" + (errors.occasion === ""))
-    initializeTimes()
+    initializeTime()
+    console.log("available ist" + availableTime.timeValue[0])
   }, [])
-
-  const initializeTimes = () => {
-    const date = new Date()
-    const today =
-      date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
-
-    const response = fetchApi(today)
-    response.then(
-      function (value) {
-        setBookTimes(value)
-        setBookData({
-          ...bookData,
-          bookingTime: value[0],
-          bookingDate: today,
-        })
-      },
-      function (error) {}
-    )
-
-    return bookTimes
-  }
-
-  const updateTimes = (date) => {
-    const response = fetchApi(date)
-    response.then(
-      function (value) {
-        setBookTimes(value)
-      },
-      function (error) {}
-    )
-  }
-
-  const fetchApi = async (date) => {
-    await wait(2000)
-    return new Promise((resolve, reject) => {
-      if (availableTimesByDate[date]) resolve(availableTimesByDate[date])
-      else reject(new Error("No available times for the selected date."))
-    })
-  }
-
-  const bookingTimeOptions = bookTimes?.map((time, index) => {
-    return (
-      <option key={time} value={time}>
-        {time}
-      </option>
-    )
-  })
 
   function handleSubmit(event) {
     event.preventDefault()
-    console.log("isError:" + isError())
-
-    submitForm(bookData)
-  }
-
-  const isError = () => {
-    setActive(
-      errors.bookingDate === "" && errors.occasion === "" && errors.book === ""
-    )
-    return isActive
+    const a = submitForm(bookData)
+    console.log(a)
   }
 
   const DateValidation = (value) => {
@@ -150,17 +54,16 @@ export default function BookingForm({ submitForm }) {
       ...errors,
       bookingDate: errorMessage,
     })
-    isError()
   }
   const guestNumberValidation = (value) => {
     let errorMessage
     if (value === 0) errorMessage = "Atleast 1 guest required"
     else errorMessage = ""
+
     setErrors({
       ...errors,
       numberOfGuest: errorMessage,
     })
-    isError()
   }
 
   const ocassionValidation = (value) => {
@@ -171,7 +74,6 @@ export default function BookingForm({ submitForm }) {
       ...errors,
       occasion: errorMessage,
     })
-    isError()
   }
 
   async function handleDate(e) {
@@ -180,9 +82,7 @@ export default function BookingForm({ submitForm }) {
       bookingDate: e.target.value,
     })
     if (e.target.value) {
-      updateTimes(e.target.value)
-    } else {
-      setBookTimes(bookingTimeSlots)
+      updateTime(e.target.value)
     }
     DateValidation(e.target.value)
   }
@@ -242,10 +142,9 @@ export default function BookingForm({ submitForm }) {
             className="booking-form-button"
             type="submit"
             disabled={
+              bookData.bookingDate === "" ||
               bookData.bookingTime === "" ||
-              bookData.bookingDate === "" ||
               bookData.numberOfGuest === 0 ||
-              bookData.bookingDate === "" ||
               bookData.occasion === "select" ||
               bookData.occasion === ""
             }
@@ -265,7 +164,13 @@ export default function BookingForm({ submitForm }) {
           name="bookingTime"
           onChange={handleTime}
         >
-          {bookingTimeOptions}
+          {availableTime.timeValue?.map((time, index) => {
+            return (
+              <option key={time} value={time} name={time}>
+                {time}
+              </option>
+            )
+          })}
         </select>
         <br />
         <label htmlFor="guests">Number of guests</label> <br />
@@ -293,14 +198,21 @@ export default function BookingForm({ submitForm }) {
             height: "35px",
             width: "255px",
           }}
+          data-testid="occasion"
           id="occasion"
           value={bookData.occasion}
           name="occasion"
           onChange={handleOcassion}
         >
-          <option value="select">--Select--</option>
-          <option value="Birthday">Birthday</option>
-          <option value="Anniversary">Anniversary</option>
+          <option value="select" name="select">
+            --Select--
+          </option>
+          <option value="Birthday" name="birthday">
+            Birthday
+          </option>
+          <option value="Anniversary" name="anniversary">
+            Anniversary
+          </option>
         </select>
         {errors.occasion ? (
           <div style={{ display: "inline", color: "red", marginLeft: "10px" }}>

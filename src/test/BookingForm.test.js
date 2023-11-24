@@ -1,4 +1,6 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
+import "@testing-library/jest-dom/extend-expect"
+import userEvent from "@testing-library/user-event"
 import BookingForm from "../pages/BookingForm"
 
 test("Renders the BookingForm heading", () => {
@@ -24,9 +26,9 @@ test("Renders the BookingForm input", () => {
 })
 
 //describe("Booking Form", () => {
-test("Checking booking button submission is disabled", async () => {
-  const onSubmit = jest.fn()
-  const { getByTestId } = render(<BookingForm onSubmit={onSubmit} />)
+test("Checking booking button  is disabled on initial mount", () => {
+  const submitForm = jest.fn()
+  render(<BookingForm submitForm={submitForm} />)
 
   //  const date = new Date()
   // const today =
@@ -54,7 +56,51 @@ test("Checking booking button submission is disabled", async () => {
   })
 
   fireEvent.click(reservationButton)
-  //expect(reservationButton).toBeInTheDocument()
-  expect(onSubmit).toHaveBeenCalledTimes(1)
+  expect(submitForm).toHaveBeenCalledTimes(1)
 })
-//})
+
+test("checking callback functionality", async () => {
+  const submitForm = jest.fn()
+  render(<BookingForm submitForm={submitForm} />)
+
+  const bookingDate = screen.getByTestId("bookingDate")
+  await userEvent.type(bookingDate, "2023-11-11")
+
+  const bookingTime = screen.getByTestId("bookingTime")
+  await userEvent.type(bookingTime, "10:00")
+
+  const numberOfGuest = screen.getByTestId("bookingGuest")
+  await userEvent.type(numberOfGuest, "10:00")
+
+  const occasion = screen.getByLabelText(/Occasion/)
+  await userEvent.type(occasion, "BirthDay")
+
+  fireEvent.click(
+    screen.getByRole("button", {
+      name: /Make a reservation/i,
+    })
+  )
+
+  expect(submitForm).toHaveBeenCalledTimes(1)
+})
+
+test("Checking initializeTimes function", async () => {
+  const submitForm = jest.fn()
+
+  render(<BookingForm submitForm={submitForm} />)
+  const bookingDate = screen.getByTestId("bookingDate")
+  await userEvent.type(bookingDate, "11-22-2023")
+
+  const optionTime = await screen.getByTestId("bookingTime")
+  //const occasion = screen.getByLabelText(/Occasion/)
+
+  expect(optionTime).toBeInTheDocument()
+})
+
+/*
+test("Checking updateTimes function", () => {
+  render(<BookingForm />)
+  console.log(initializeTimes())
+  //expect(initializeTimes()).toBeInTheDocument()
+})
+*/

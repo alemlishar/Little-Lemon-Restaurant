@@ -2,7 +2,6 @@ body {
   margin: 0;
   font-family: poppins;
 }
-
 .nav-main-container {
   border: 2px;
   padding: 10;
@@ -10,7 +9,6 @@ body {
   width: 100%;
   position: relative;
 }
-
 .nav-logo-container {
   border: 5px;
   top: 15px;
@@ -30,7 +28,6 @@ body {
   font-size: 12px;
   font-weight: bolder;
 }
-
 .main-container {
   border: 2px;
   background-color: #495e57;
@@ -38,13 +35,11 @@ body {
   width: 100%;
   position: relative;
 }
-
 .main-title {
   font-size: 18px;
   color: #f4ce14;
   margin-bottom: 2px;
 }
-
 .main-chicago {
   padding: 0;
   margin-bottom: 1px;
