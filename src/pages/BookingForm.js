@@ -1,7 +1,8 @@
 import React, { useState } from "react"
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 import { useNavigate } from "react-router-dom"
 import useScript from "../assets/UseScripts"
-import { ErrorMessage } from "formik"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -208,8 +209,9 @@ export default function BookingForm({
           name="occasion"
           onChange={handleOcassion}
         >
+          <FontAwesomeIcon icon={"chevron-up"} size="20x" />
           <option value="select" name="select">
-            --Select--
+            Occaasion
           </option>
           <option value="Birthday" name="birthday">
             Birthday

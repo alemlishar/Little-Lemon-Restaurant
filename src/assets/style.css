@@ -2,31 +2,46 @@ body {
   margin: 0;
   font-family: poppins;
 }
+
+@media screen and (max-width: 700px) {
+  .nav-menu-container,
+  .highlight-cart-container,
+  .highlight-specialbox-container,
+  .special-food-specialbox-container {
+    flex-direction: column;
+  }
+}
+
 .nav-main-container {
+  top: 10px;
   border: 2px;
   padding: 10;
-  height: 80px;
+  height: 120px;
   width: 100%;
   position: relative;
+  display: flex;
 }
 .nav-logo-container {
   border: 5px;
   top: 15px;
-  left: 450px;
+  left: 30%;
   position: absolute;
+  display: flex;
 }
 .nav-menu-container {
   height: 100%;
   border: 5px;
   top: 10px;
-  left: 830px;
+  left: 50%;
   position: absolute;
+  display: flex;
 }
 .nav-menu-li {
   display: inline;
   margin-left: 20px;
   font-size: 12px;
   font-weight: bolder;
+  display: flex;
 }
 .main-container {
   border: 2px;
@@ -91,57 +106,59 @@ body {
   margin-top: 30px;
   border-color: #f4ce14;
   background-color: #f4ce14;
-  border-radius: 8px;
+  border-radius: 5px;
   width: 140px;
-  height: 35px;
+  height: 40px;
   position: absolute;
   left: 64%;
 }
 
-.highlight-specialbox-container {
+.special-food-specialbox-container {
   height: 400px;
   border: 20px;
   position: absolute;
   left: 31%;
+  display: flex;
 }
 
-.highlight-cart-container {
-  width: 200px;
-  float: left;
-  border: 1px solid #edefee;
-  left: 50%;
-  height: 350px;
-  margin-top: 20px;
-  background-color: #edefee;
+.special-food-container {
+  width: "200px";
+  float: "left";
+  border: "1px solid #EDEfEE";
+  left: "50%";
+  height: "350px";
+  margin-top: "20px";
+  margin-left: "15px";
+  background: "#EDEfEE";
 }
 
-.highlight-cart-image {
+.special-food-image {
   width: 200px;
   height: 160px;
   border-radius: 10px;
 }
 
-.highlight-cart-title {
+.special-food-title {
   margin-left: 10px;
   font-size: 14px;
   font-weight: bold;
 }
 
-.highlight-cart-description {
+.special-food-description {
   margin-top: 20px;
   margin-left: 10px;
   margin-right: 5px;
   font-size: 10px;
 }
 
-.highlight-cart-price {
+.special-food-price {
   margin-left: 50px;
   font-size: 14px;
   font-weight: bold;
   color: #ee9972;
 }
 
-.highlight-order {
+.special-food-order {
   margin-top: 45px;
   margin-left: 10px;
   margin-right: 5px;

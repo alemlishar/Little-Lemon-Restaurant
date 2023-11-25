@@ -1,274 +1,49 @@
-import React from "react"
-import greekSalad from "./../assets/greek salad.jpg"
-import lemoDesert from "./../assets/lemon dessert.jpg"
-import bruchetta from "./../assets/bruchetta.png"
-//import specialDatas from "./../assets/Special-food-list"
-//import specialFood from "./SpecialFood"
+import React, { useState, useEffect } from "react"
+import "../assets/style.css"
+import specialDatas from "./../assets/Special-food-list"
+import SpecialFood from "./SpecialFood"
 
 export default function Highlightspecials() {
-  //const specialFoods = specialDatas.map((data) => <specialFood item={data} />)
+  const [matches, setMatches] = useState(
+    window.matchMedia("(min-width: 768px)").matches
+  )
+  useEffect(() => {
+    window
+      .matchMedia("(min-width: 768px)")
+      .addEventListener("change", (e) => setMatches(e.matches))
+
+    return () => {
+      window
+        .matchMedia("(min-width: 768px)")
+        .removeEventListener("change", (e) => setMatches(e.matches))
+    }
+  }, [])
 
   return (
-    <div
-      style={{
-        width: "100%",
-        marginTop: "40px",
-        height: "600px",
-        border: "5px",
-        position: "relative",
-      }}
-    >
+    <div className="highlight-main-container">
       <div
         style={{
           width: "100%",
           height: "100px",
         }}
       >
-        <p
-          style={{
-            left: "31%",
-            fontSize: "28px",
-            fontWeight: "bold",
-            position: "absolute",
-          }}
-        >
-          This Weeks Specials!
-        </p>
-        <button
-          style={{
-            marginTop: "30px",
-            borderColor: "#F4CE14",
-            backgroundColor: "#F4CE14",
-            borderradius: "8px",
-            width: "140px",
-            height: "35px",
-            position: "absolute",
-            left: "64%",
-          }}
-        >
-          Online menu
-        </button>
+        <p className="highlight-special-paragraph">This Weeks Specials!</p>
+        {matches && (
+          <div>
+            <button className="highlight-order-button">Online menu</button>
+          </div>
+        )}
       </div>
-      <div
-        id="special container"
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          height: "400px",
-          border: "20px",
-          position: "absolute",
-          left: "31%",
-        }}
-      >
-        <div
-          style={{
-            width: "200px",
-            float: "left",
-            border: "1px solid #EDEfEE",
-            left: "50%",
-            height: "350px",
-            marginTop: "20px",
-            backgroundColor: "#EDEfEE",
-          }}
-        >
-          <img
-            src={greekSalad}
-            width="200px"
-            height="160px"
-            alt=""
-            borderradius="10px"
-          ></img>
-          <span
-            style={{
-              display: "inline-flex",
-              marginTop: "10px",
-              marginRight: "2px",
-            }}
-          >
-            <p
-              style={{
-                marginLeft: "10px",
-                fontSize: "14px",
-                fontWeight: "bold",
-              }}
-            >
-              Greek Salad
-            </p>
-            <p
-              style={{
-                marginLeft: "50px",
-                fontSize: "14px",
-                fontWeight: "bold",
-                color: "#EE9972",
-              }}
-            >
-              $12.99
-            </p>
-          </span>
-          <p
-            style={{
-              marginTop: "20px",
-              marginLeft: "10px",
-              marginRight: "5px",
-              fontSize: "10px",
-            }}
-          >
-            The famous greek salad of crispy lettuce, peppers, olives and our
-            chicago stylefeta cheese garnished with crunchy garlic and rosemary
-            croutons
-          </p>
-          <p
-            style={{
-              marginTop: "45px",
-              marginLeft: "10px",
-              marginRight: "5px",
-              fontSize: "10px",
-              fontWeight: "bold",
-            }}
-          >
-            Order a delivery
-          </p>
-        </div>
-        <div
-          style={{
-            width: "200px",
-            float: "left",
-            border: "1px solid #EDEfEE",
-            height: "350px",
-            marginTop: "20px",
-            marginLeft: "20px",
-            backgroundColor: "#EDEfEE",
-          }}
-        >
-          <img
-            src={bruchetta}
-            width="200px"
-            height="160px"
-            alt=""
-            borderradius="10px"
-          ></img>
-          <span
-            style={{
-              display: "inline-flex",
-              marginTop: "10px",
-              marginRight: "2px",
-            }}
-          >
-            <p
-              style={{
-                marginTop: "10px",
-                marginLeft: "10px",
-                marginRight: "5px",
-                fontSize: "14px",
-                fontWeight: "bold",
-              }}
-            >
-              Brucheta
-            </p>
-            <p
-              style={{
-                marginLeft: "50px",
-                fontSize: "14px",
-                fontWeight: "bold",
-                color: "#EE9972",
-              }}
-            >
-              $12.99
-            </p>
-          </span>
-          <p
-            style={{
-              marginTop: "20px",
-              marginLeft: "10px",
-              marginRight: "5px",
-              fontSize: "10px",
-            }}
-          >
-            Our Brucheta is made from grilled bread that has been seared with
-            garlic and seasoned with salt and olive oil
-          </p>
-          <p
-            style={{
-              marginTop: "45px",
-              marginLeft: "10px",
-              marginRight: "5px",
-              fontSize: "10px",
-              fontWeight: "bold",
-            }}
-          >
-            Order a delivery
-          </p>
-        </div>
-        <div
-          style={{
-            width: "200px",
-            float: "left",
-            border: "1px solid #EDEfEE",
-            height: "350px",
-            marginTop: "20px",
-            marginLeft: "20px",
-            backgroundColor: "#EDEfEE",
-          }}
-        >
-          <img
-            src={lemoDesert}
-            width="200px"
-            height="160px"
-            borderradius="10px"
-            alt=""
-          ></img>
-          <span
-            style={{
-              display: "inline-flex",
-              marginTop: "10px",
-              marginRight: "2px",
-            }}
-          >
-            <p
-              style={{
-                marginTop: "10px",
-                marginLeft: "10px",
-                marginRight: "5px",
-                fontSize: "14px",
-                fontWeight: "bold",
-              }}
-            >
-              Lemon Desert
-            </p>
-            <p
-              style={{
-                marginLeft: "40px",
-                fontSize: "14px",
-                fontWeight: "bold",
-                color: "#EE9972",
-              }}
-            >
-              $12.99
-            </p>
-          </span>
-          <p
-            style={{
-              marginTop: "25px",
-              marginLeft: "10px",
-              marginRight: "5px",
-              fontSize: "10px",
-            }}
-          >
-            This comes straight from grandmas recipe book, every last ingrident
-            has been sourced and is as authentic as can be imagined
-          </p>
-          <p
-            style={{
-              marginTop: "45px",
-              marginLeft: "10px",
-              marginRight: "5px",
-              fontSize: "10px",
-              fontWeight: "bold",
-            }}
-          >
-            Order a delivery
-          </p>
-        </div>
+      <div className="special-food-specialbox-container" id="special container">
+        {specialDatas.map((data) => (
+          <SpecialFood
+            key={data.id}
+            image={data.getImageSrc()}
+            title={data.title}
+            description={data.description}
+            price={data.price}
+          />
+        ))}
       </div>
     </div>
   )

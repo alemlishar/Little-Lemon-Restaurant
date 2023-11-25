@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from "react"
+import React, { useReducer, useState, useEffect } from "react"
 import logo from "./../assets/restauranfood.jpg"
 import BookingForm from "./BookingForm"
 
@@ -51,6 +51,21 @@ const aboutParagraph =
   "recipes served with a modern twist."
 
 export default function Main() {
+  const [matches, setMatches] = useState(
+    window.matchMedia("(min-width: 768px)").matches
+  )
+
+  useEffect(() => {
+    window
+      .matchMedia("(min-width: 768px)")
+      .addEventListener("change", (e) => setMatches(e.matches))
+
+    return () => {
+      window
+        .matchMedia("(min-width: 768px)")
+        .removeEventListener("change", (e) => setMatches(e.matches))
+    }
+  }, [])
   const [availableTime, dispatch] = useReducer(reducer, bookingTimeSlots)
   const [availableTimes, setAvailableTimes] = useState([])
 
@@ -85,11 +100,15 @@ export default function Main() {
         <p className="main-title">Little Lemmon</p>
         <p className="main-chicago">Chicago</p>
         <h6 className="main-about">{aboutParagraph}</h6>
-        <button className="main-breserve-utton">Reserve a Table</button>
+        {matches && (
+          <button className="main-breserve-utton">Reserve a Table</button>
+        )}
       </div>
-      <div className="main-logo">
-        <img src={logo} width="190px" height="220px" alt="hey"></img>
-      </div>
+      {matches && (
+        <div className="main-logo">
+          <img src={logo} width="190px" height="220px" alt="hey"></img>
+        </div>
+      )}
     </div>
   )
 }

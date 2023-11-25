@@ -1,6 +1,9 @@
 import React, { Component } from "react"
+import "../assets/style.css"
 
-export default function SpecialFood(props) {
+export default function SpecialFood({ image, title, description, price }) {
+  const order = "order Delivery"
+
   return (
     <div
       style={{
@@ -10,15 +13,16 @@ export default function SpecialFood(props) {
         left: "50%",
         height: "350px",
         marginTop: "20px",
+        marginLeft: "15px",
         backgroundColor: "#EDEfEE",
       }}
     >
       <img
-        src={greekSalad}
+        src={image}
         width="200px"
         height="160px"
         alt=""
-        borderRadius="10px"
+        borderradius="10px"
       ></img>
       <span
         style={{
@@ -27,49 +31,11 @@ export default function SpecialFood(props) {
           marginRight: "2px",
         }}
       >
-        <p
-          style={{
-            marginLeft: "10px",
-            fontSize: "14px",
-            fontWeight: "bold",
-          }}
-        >
-          Greek Salad
-        </p>
-        <p
-          style={{
-            marginLeft: "50px",
-            fontSize: "14px",
-            fontWeight: "bold",
-            color: "#EE9972",
-          }}
-        >
-          $12.99
-        </p>
+        <p className="special-food-title">{title}</p>
+        <p className="special-food-price">{price}</p>
       </span>
-      <p
-        style={{
-          marginTop: "20px",
-          marginLeft: "10px",
-          marginRight: "5px",
-          fontSize: "10px",
-        }}
-      >
-        The famous greek salad of crispy lettuce, peppers, olives and our
-        chicago stylefeta cheese garnished with crunchy garlic and rosemary
-        croutons
-      </p>
-      <p
-        style={{
-          marginTop: "45px",
-          marginLeft: "10px",
-          marginRight: "5px",
-          fontSize: "10px",
-          fontWeight: "bold",
-        }}
-      >
-        Order a delivery
-      </p>
+      <p className="special-food-description">{description}</p>
+      <p className="special-food-order">{order}</p>
     </div>
   )
 }

@@ -1,17 +1,35 @@
-import React from "react"
+import { React, useState, useEffect } from "react"
 import logo from "./../assets/lemmon.png"
 import "../assets/style.css"
 import { Link } from "react-router-dom"
 
 export default function Nav() {
+  const [matches, setMatches] = useState(
+    window.matchMedia("(min-width: 768px)").matches
+  )
+  useEffect(() => {
+    window
+      .matchMedia("(min-width: 768px)")
+      .addEventListener("change", (e) => setMatches(e.matches))
+
+    return () => {
+      window
+        .matchMedia("(min-width: 768px)")
+        .removeEventListener("change", (e) => setMatches(e.matches))
+    }
+  }, [])
   return (
     <div className="nav-main-container">
-      <span className="nav-logo-container">
-        <img src={logo} width="170px" height={50} alt=""></img>
-      </span>
-      <div className="nav-menu-container">
-        <ul style={{ liststyle: "no-bullet" }}>
-          <li className="nav-menu-li" style={{ marginLeft: "-80px" }}>
+      {matches && (
+        <div>
+          <span className="nav-logo-container">
+            <img src={logo} width="170px" height={50} alt=""></img>
+          </span>
+        </div>
+      )}
+      <div>
+        <ul className="nav-menu-container" style={{ liststyle: "no-bullet" }}>
+          <li className="nav-menu-li">
             <Link style={{ textDecoration: "none" }} to="/">
               Home
             </Link>
