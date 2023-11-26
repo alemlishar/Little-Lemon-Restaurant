@@ -1,6 +1,7 @@
 import React from "react"
 import { useReducer } from "react"
 import BookingForm from "./BookingForm"
+import { useNavigate } from "react-router-dom"
 
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 const bookingTimeSlots = ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"]
@@ -65,13 +66,14 @@ const initialState = {
 
 export default function BookingPage() {
   const [state, dispatch] = useReducer(reducer, initialState)
+  const navigate = useNavigate()
 
   const submitForm = async (book) => {
     console.log("form submitted" + book.bookingDate)
     const response = submitApi(book)
     response.then(
       function (value) {
-        //navigate("/confirmedbook")
+        navigate("/confirmedbook")
         console.log("clicked" + value)
       },
       function (error) {

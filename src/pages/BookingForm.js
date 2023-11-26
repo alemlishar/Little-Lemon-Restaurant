@@ -1,10 +1,6 @@
 import React, { useState } from "react"
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
-import { useNavigate } from "react-router-dom"
 import useScript from "../assets/UseScripts"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-
-const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 export default function BookingForm({
   submitForm,
@@ -12,12 +8,9 @@ export default function BookingForm({
   initializeTime,
   updateTime,
 }) {
-  // const navigate = useNavigate()
   const [loaded, error] = useScript(
     "https://raw.githubusercontent.com/Meta-Front-End-Developer-PC/capstone/master/api.js"
   )
-
-  const [bookTimes, setBookTimes] = useState()
 
   const [bookData, setBookData] = useState({
     bookingDate: "",
@@ -32,14 +25,25 @@ export default function BookingForm({
     numberOfGuest: "",
     occasion: "",
   })
-
+  const [matches, setMatches] = useState(
+    window.matchMedia("(min-width: 950px)").matches
+  )
   React.useEffect(() => {
+    window.matchMedia("(min-width: 950px)").addEventListener("change", (e) => {
+      setMatches(e.matches)
+    })
+
     initializeTime()
     setBookData({
       ...bookData,
       bookingDate: availableTime.date,
       bookingTime: availableTime.timeValue[0],
     })
+    return () => {
+      window
+        .matchMedia("(min-width: 950px)")
+        .removeEventListener("change", (e) => setMatches(e.matches))
+    }
   }, [])
 
   function handleSubmit(event) {
@@ -116,14 +120,18 @@ export default function BookingForm({
   }
 
   return (
-    <div className="booking-form-container">
-      <h2 style={{ color: "#495e57", marginLeft: "5px" }}>
+    <div
+      className="booking-form-container"
+      style={{ width: matches ? "650px" : "330px" }}
+    >
+      <h2 style={{ marginTop: "20px", color: "#495e57", marginLeft: "5px" }}>
         Booking Table Form
       </h2>
+
       <form
         data-testid="formbook"
         onSubmit={handleSubmit}
-        style={{ marginTop: "25px", marginLeft: "15px" }}
+        style={{ marginLeft: "15px" }}
       >
         <label htmlFor="res-date">Choose date</label>
         <br />
@@ -142,21 +150,24 @@ export default function BookingForm({
           </div>
         ) : null}
         <br />
-        <div className="booking-button-container">
-          <button
-            className="booking-form-button"
-            type="submit"
-            disabled={
-              bookData.bookingDate === "" ||
-              bookData.bookingTime === "" ||
-              bookData.numberOfGuest === 0 ||
-              bookData.occasion === "select" ||
-              bookData.occasion === ""
-            }
-          >
-            Make a reservation
-          </button>
-        </div>
+        {matches ? (
+          <div className="booking-button-container">
+            <button
+              style={{ marginLeft: matches ? "115px" : "0px" }}
+              className="booking-form-button"
+              type="submit"
+              disabled={
+                bookData.bookingDate === "" ||
+                bookData.bookingTime === "" ||
+                bookData.numberOfGuest === 0 ||
+                bookData.occasion === "select" ||
+                bookData.occasion === ""
+              }
+            >
+              Make a reservation
+            </button>
+          </div>
+        ) : null}
         <label htmlFor="res-time" style={{ marginTop: "30px" }}>
           Choose time
         </label>
@@ -224,6 +235,24 @@ export default function BookingForm({
           <div style={{ display: "inline", color: "red", marginLeft: "10px" }}>
             {errors.occasion}
           </div>
+        ) : null}
+        <br />
+        <br />
+        {!matches ? (
+          <button
+            style={{ marginLeft: !matches ? "90px" : "0px" }}
+            className="booking-form-button"
+            type="submit"
+            disabled={
+              bookData.bookingDate === "" ||
+              bookData.bookingTime === "" ||
+              bookData.numberOfGuest === 0 ||
+              bookData.occasion === "select" ||
+              bookData.occasion === ""
+            }
+          >
+            Make a reservation
+          </button>
         ) : null}
       </form>
     </div>

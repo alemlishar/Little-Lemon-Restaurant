@@ -12,16 +12,15 @@ export default function ConfirmedBooking() {
     <div>
       <div
         style={{
-          position: "absolute",
-          marginLeft: "350px",
+          position: "relative",
           marginTop: "30px",
           left: "1%",
         }}
       >
         <h1
           style={{
-            marginTop: "30px",
-            marginLeft: "250px",
+            marginTop: "100px",
+            marginLeft: "36%",
           }}
         >
           Booking Confirmed!
@@ -33,7 +32,7 @@ export default function ConfirmedBooking() {
             padding: "0",
             backgroundColor: "#F4CE14",
             borderRadius: "8px",
-            marginLeft: "350px",
+            marginLeft: "42%",
             marginTop: "10px",
           }}
           type="submit"

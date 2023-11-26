@@ -21,13 +21,13 @@ export default function Nav() {
   return (
     <div className="nav-main-container">
       {matches && (
-        <div>
+        <div className="nav-menu-container-div1">
           <span className="nav-logo-container">
-            <img src={logo} width="170px" height={50} alt=""></img>
+            <img src={logo} width="170px" height={55} alt=""></img>
           </span>
         </div>
       )}
-      <div>
+      <div className="nav-menu-container-div">
         <ul className="nav-menu-container" style={{ liststyle: "no-bullet" }}>
           <li className="nav-menu-li">
             <Link style={{ textDecoration: "none" }} to="/">

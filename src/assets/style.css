@@ -3,19 +3,31 @@ body {
   font-family: poppins;
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 950px) {
+  .nav-menu-container-div,
   .nav-menu-container,
   .highlight-cart-container,
   .highlight-specialbox-container,
   .special-food-specialbox-container {
     flex-direction: column;
+    margin-left: 0px;
   }
+}
+
+.nav-menu-container-div1 {
+  margin-left: 31%;
+  position: relative;
+  flex-direction: wrap;
+}
+.nav-menu-container-div {
+  margin-left: 7%;
+  position: relative;
+  display: flex;
 }
 
 .nav-main-container {
   top: 10px;
   border: 2px;
-  padding: 10;
   height: 120px;
   width: 100%;
   position: relative;
@@ -24,16 +36,13 @@ body {
 .nav-logo-container {
   border: 5px;
   top: 15px;
-  left: 30%;
-  position: absolute;
   display: flex;
 }
 .nav-menu-container {
   height: 100%;
   border: 5px;
-  top: 10px;
-  left: 50%;
-  position: absolute;
+  margin-top: 25px;
+  position: relative;
   display: flex;
 }
 .nav-menu-li {
@@ -110,7 +119,7 @@ body {
   width: 140px;
   height: 40px;
   position: absolute;
-  left: 64%;
+  margin-left: 64%;
 }
 
 .special-food-specialbox-container {
@@ -167,16 +176,37 @@ body {
 }
 
 .booking-form-container {
-  margin-top: 70px;
+  margin-top: 50px;
   position: relative;
   left: 30%;
-  width: 650px;
   height: 100%;
   border-radius: 5px;
   font-size: 14px;
   color: #495e57;
   font-weight: bold;
-  border: 7px solid #495e57;
+  border: 3px solid #495e57;
+}
+
+.booking-form-hidden-container {
+  position: absolute;
+  width: 100%;
+  height: 99%;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #495e57;
+  font-weight: bold;
+  border: 3px solid #495e57;
+}
+
+.booking-form-hidden-half-container {
+  position: absolute;
+  width: 45%;
+  height: 99%;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #495e57;
+  font-weight: bold;
+  border: 3px solid #495e57;
 }
 
 .booking-form-input {
@@ -201,7 +231,6 @@ body {
   padding: 0;
   background-color: #f4ce14;
   border-radius: 5px;
-  margin-left: 112px;
   margin-top: 5px;
 }
 

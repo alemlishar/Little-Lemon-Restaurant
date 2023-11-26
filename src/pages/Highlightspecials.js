@@ -5,16 +5,16 @@ import SpecialFood from "./SpecialFood"
 
 export default function Highlightspecials() {
   const [matches, setMatches] = useState(
-    window.matchMedia("(min-width: 768px)").matches
+    window.matchMedia("(min-width: 900px)").matches
   )
   useEffect(() => {
     window
-      .matchMedia("(min-width: 768px)")
+      .matchMedia("(min-width: 900px)")
       .addEventListener("change", (e) => setMatches(e.matches))
 
     return () => {
       window
-        .matchMedia("(min-width: 768px)")
+        .matchMedia("(min-width: 900px)")
         .removeEventListener("change", (e) => setMatches(e.matches))
     }
   }, [])
