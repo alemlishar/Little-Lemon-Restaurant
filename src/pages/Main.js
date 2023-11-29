@@ -1,6 +1,7 @@
 import React, { useReducer, useState, useEffect } from "react"
 import logo from "./../assets/restauranfood.jpg"
 import BookingForm from "./BookingForm"
+import { useNavigate } from "react-router-dom"
 
 export const availableTimesByDate = {
   "2023-08-29": ["10:00", "11:00", "12:00"],
@@ -51,6 +52,7 @@ const aboutParagraph =
   "recipes served with a modern twist."
 
 export default function Main() {
+  const navigate = useNavigate()
   const [matches, setMatches] = useState(
     window.matchMedia("(min-width: 900px)").matches
   )
@@ -101,7 +103,15 @@ export default function Main() {
         <p className="main-chicago">Chicago</p>
         <h6 className="main-about">{aboutParagraph}</h6>
         {matches && (
-          <button className="main-breserve-utton">Reserve a Table</button>
+          <button
+            className="main-reserve-button"
+            onClick={(e) => {
+              e.preventDefault()
+              navigate("/booking")
+            }}
+          >
+            Reserve a Table
+          </button>
         )}
       </div>
       {matches && (

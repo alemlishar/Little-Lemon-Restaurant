@@ -40,13 +40,21 @@ export default function BookingForm({
 
   const [errors, setErrors] = useState({
     bookingDate: "",
-    bookingTime: "error",
+    bookingTime: "",
     numberOfGuest: "",
     occasion: "",
   })
   const [matches, setMatches] = useState(
     window.matchMedia("(min-width: 950px)").matches
   )
+  React.useEffect(() => {
+    setBookData({
+      ...bookData,
+      bookingTime: availableTime.timeValue[0],
+    })
+    timeValidation(availableTime.timeValue[0])
+  }, [availableTime])
+
   React.useEffect(() => {
     window.matchMedia("(min-width: 950px)").addEventListener("change", (e) => {
       setMatches(e.matches)
@@ -58,6 +66,8 @@ export default function BookingForm({
       bookingDate: availableTime.date,
       bookingTime: availableTime.timeValue[0],
     })
+    DateValidation(availableTime.date)
+    timeValidation(availableTime.timeValue[0])
     return () => {
       window
         .matchMedia("(min-width: 950px)")
@@ -83,6 +93,18 @@ export default function BookingForm({
       bookingDate: errorMessage,
     })
   }
+
+  const timeValidation = (value) => {
+    let errorMessage
+    if (value === "No available time") errorMessage = "Reserve on other day"
+    else errorMessage = ""
+
+    setErrors({
+      ...errors,
+      bookingTime: errorMessage,
+    })
+  }
+
   const guestNumberValidation = (value) => {
     let errorMessage
     if (value === 0) errorMessage = "Atleast 1 guest required"
@@ -96,7 +118,7 @@ export default function BookingForm({
 
   const ocassionValidation = (value) => {
     let errorMessage
-    if (value === "select") errorMessage = "Specify ocassion type"
+    if (value === "occassion") errorMessage = "Specify ocassion type"
     else errorMessage = ""
     setErrors({
       ...errors,
@@ -120,6 +142,7 @@ export default function BookingForm({
       ...bookData,
       bookingTime: e.target.value,
     })
+    timeValidation(e.target.value)
   }
 
   function handleOcassion(e) {
@@ -179,9 +202,9 @@ export default function BookingForm({
               type="submit"
               disabled={
                 bookData.bookingDate === "" ||
-                bookData.bookingTime === "" ||
+                bookData.bookingTime === "No available time" ||
                 bookData.numberOfGuest === 0 ||
-                bookData.occasion === "select" ||
+                bookData.occasion === "occassion" ||
                 bookData.occasion === ""
               }
             >
@@ -201,7 +224,7 @@ export default function BookingForm({
           name="bookingTime"
           onChange={handleTime}
         >
-          {availableTime.timeValue?.map((time, index) => {
+          {availableTime?.timeValue?.map((time, index) => {
             return (
               <option key={time} value={time} name={time}>
                 {time}
@@ -209,6 +232,17 @@ export default function BookingForm({
             )
           })}
         </select>
+        {errors.bookingTime ? (
+          <div
+            style={{
+              display: matches ? "inline" : "block",
+              color: "red",
+              marginLeft: "10px",
+            }}
+          >
+            {errors.bookingTime}
+          </div>
+        ) : null}
         <br />
         <label htmlFor="guests">Number of guests</label> <br />
         <input
@@ -241,8 +275,8 @@ export default function BookingForm({
           name="occasion"
           onChange={handleOcassion}
         >
-          <option value="select" name="select" FontAwesomeIcon>
-            Occasion
+          <option value="occassion" name="select" FontAwesomeIcon>
+            --Occasion--
           </option>
           <option value="Birthday" name="birthday">
             Birthday
@@ -265,9 +299,9 @@ export default function BookingForm({
             type="submit"
             disabled={
               bookData.bookingDate === "" ||
-              bookData.bookingTime === "" ||
+              bookData.bookingTime === "No available time" ||
               bookData.numberOfGuest === 0 ||
-              bookData.occasion === "select" ||
+              bookData.occasion === "occassion" ||
               bookData.occasion === ""
             }
           >

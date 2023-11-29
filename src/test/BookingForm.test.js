@@ -61,7 +61,12 @@ test("Checking booking button  is disabled on initial mount", () => {
 
 test("checking callback functionality", async () => {
   const submitForm = jest.fn()
-  render(<BookingForm submitForm={submitForm} />)
+  render(
+    <BookingForm
+      submitForm={submitForm}
+      availableTime={(availableTime.timeValue = "1")}
+    />
+  )
 
   const bookingDate = screen.getByTestId("bookingDate")
   await userEvent.type(bookingDate, "2023-11-11")
