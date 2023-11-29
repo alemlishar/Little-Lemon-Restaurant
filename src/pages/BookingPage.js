@@ -2,6 +2,8 @@ import React from "react"
 import { useReducer } from "react"
 import BookingForm from "./BookingForm"
 import { useNavigate } from "react-router-dom"
+import BookingSlot from "./BookingSlot"
+import { gethours, submitAPI, fetchAPI } from "./ApiSimulation"
 
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 const bookingTimeSlots = ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"]
@@ -51,6 +53,8 @@ const reducer = (prevState, action) => {
         ...prevState,
         timeValue: action.val,
       }
+    case "bookTime":
+      return {}
   }
 }
 
@@ -62,34 +66,41 @@ const initialState = {
     (new Date().getMonth() + 1) +
     "-" +
     new Date().getDate(),
+  availableTimeByDate: availableTimesByDate,
+  bookedTimeByDate: [],
 }
 
 export default function BookingPage() {
+  const bookingSlot = Object.entries(availableTimesByDate).forEach(
+    (key, value) => {
+      return <BookingSlot id={key[0]} value={key[1]} />
+    }
+  )
+
+  console.log("type of" + typeof availableTimesByDate)
   const [state, dispatch] = useReducer(reducer, initialState)
   const navigate = useNavigate()
 
   const submitForm = async (book) => {
-    console.log("form submitted" + book.bookingDate)
-    const response = submitApi(book)
-    response.then(
-      function (value) {
-        navigate("/confirmedbook")
-        console.log("clicked" + value)
-      },
-      function (error) {
-        console.log("clicked" + error)
-      }
+    //console.log("api response" + submitAPI(book))
+    console.log(
+      "submitted form date and time:" +
+        new Date(book.bookingDate + "T" + book.bookingTime)
     )
+    const response = submitAPI({
+      ...book,
+      bookingDate: new Date(
+        book.bookingDate + "T" + book.bookingTime + ":00.000Z"
+      ),
+    })
+
+    if (response) navigate("/confirmedbook")
   }
 
   const submitApi = async (formData) => {
-    console.log("submitted date:" + formData.bookingDate)
     const randomNumber = Math.random()
-    console.log("random Number:" + randomNumber)
     await wait(2000)
-    console.log("first")
     return new Promise((resolve, reject) => {
-      console.log("second")
       if (randomNumber < 0.5) reject(new Error("Form submission failed"))
       else resolve(true)
     })
@@ -98,7 +109,9 @@ export default function BookingPage() {
   const fetchApi = async (date) => {
     await wait(2000)
     return new Promise((resolve, reject) => {
-      if (availableTimesByDate[date]) resolve(availableTimesByDate[date])
+      const value = fetchAPI(new Date(date))
+      console.log("new api fetched time:" + gethours(value))
+      if (value) resolve(gethours(value))
       else reject(new Error("No available times for the selected date."))
     })
   }
@@ -111,8 +124,6 @@ export default function BookingPage() {
     const response = fetchApi(today)
     response.then(
       function (value) {
-        console.log("promised val state" + value)
-
         dispatch({
           type: "initializeTime",
           val: value,
@@ -126,7 +137,6 @@ export default function BookingPage() {
     const response = fetchApi(date)
     response.then(
       function (value) {
-        console.log("promised val state" + value)
         dispatch({
           type: "updateTime",
           val: value,
@@ -138,6 +148,109 @@ export default function BookingPage() {
 
   return (
     <>
+      <div
+        style={{
+          position: "relative",
+          border: "3px solid #f4ce14",
+          height: "150px",
+          marginTop: "60px",
+          left: "30%",
+          width: "43%",
+          marginBottom: "0px",
+          borderRadius: "5px",
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            border: "3px solid #495e57",
+            marginLeft: "11px",
+            width: "50px",
+            height: "40px",
+          }}
+        ></div>
+        <div
+          style={{
+            position: "absolute",
+            border: "3px solid #495e57",
+            marginLeft: "72px",
+            width: "50px",
+            height: "40px",
+          }}
+        ></div>
+        <div
+          style={{
+            position: "absolute",
+            border: "3px solid #495e57",
+            marginLeft: "133px",
+            width: "50px",
+            height: "40px",
+          }}
+        ></div>
+        <div
+          style={{
+            position: "absolute",
+            border: "3px solid #495e57",
+            marginLeft: "194px",
+            width: "50px",
+            height: "40px",
+          }}
+        ></div>
+        <div
+          style={{
+            position: "absolute",
+            border: "3px solid #495e57",
+            marginLeft: "246px",
+            width: "50px",
+            height: "40px",
+          }}
+        ></div>
+        <div
+          style={{
+            position: "absolute",
+            border: "3px solid #495e57",
+            marginLeft: "310px",
+            width: "50px",
+            height: "40px",
+          }}
+        ></div>
+        <div
+          style={{
+            position: "absolute",
+            border: "3px solid #495e57",
+            marginLeft: "370px",
+            width: "50px",
+            height: "40px",
+          }}
+        ></div>{" "}
+        <div
+          style={{
+            position: "absolute",
+            border: "3px solid #495e57",
+            marginLeft: "430px",
+            width: "50px",
+            height: "40px",
+          }}
+        ></div>{" "}
+        <div
+          style={{
+            position: "absolute",
+            border: "3px solid #495e57",
+            marginLeft: "490px",
+            width: "50px",
+            height: "40px",
+          }}
+        ></div>{" "}
+        <div
+          style={{
+            position: "absolute",
+            border: "3px solid #495e57",
+            marginLeft: "550px",
+            width: "50px",
+            height: "40px",
+          }}
+        ></div>
+      </div>
       <BookingForm
         submitForm={submitForm}
         initializeTime={initializeTime}

@@ -1,6 +1,25 @@
 import React, { useState } from "react"
 import useScript from "../assets/UseScripts"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faEnvelope, faFontAwesome } from "@fortawesome/free-solid-svg-icons"
+import { library } from "@fortawesome/fontawesome-svg-core"
+import { fab } from "@fortawesome/free-brands-svg-icons"
+import { faInfo, faCoffee } from "@fortawesome/free-solid-svg-icons"
+library.add(fab, faInfo, faCoffee)
+
+const websiteFilterFiedsOptions = [
+  { value: "", label: "Search and select website activity" },
+  {
+    value: "page_visited",
+    label: (
+      <>
+        <span style={{ paddingRight: "5px" }}>Page Visited</span>
+        <FontAwesomeIcon icon="info" title={"Page Visited Option"} />
+      </>
+    ),
+  },
+  { value: "form_submitted", label: "Form Submitted" },
+]
 
 export default function BookingForm({
   submitForm,
@@ -9,7 +28,7 @@ export default function BookingForm({
   updateTime,
 }) {
   const [loaded, error] = useScript(
-    "https://raw.githubusercontent.com/Meta-Front-End-Developer-PC/capstone/master/api.js"
+    "https://raw.githubusercontent.com/rofinn/ll-frontend-capstone/main/src/api.js"
   )
 
   const [bookData, setBookData] = useState({
@@ -124,7 +143,9 @@ export default function BookingForm({
       className="booking-form-container"
       style={{ width: matches ? "650px" : "330px" }}
     >
-      <h2 style={{ marginTop: "20px", color: "#495e57", marginLeft: "5px" }}>
+      <h2
+        style={{ marginTop: "20px", color: "#495e57", margFontinLeft: "5px" }}
+      >
         Booking Table Form
       </h2>
 
@@ -220,9 +241,8 @@ export default function BookingForm({
           name="occasion"
           onChange={handleOcassion}
         >
-          <FontAwesomeIcon icon={"chevron-up"} size="20x" />
-          <option value="select" name="select">
-            Occaasion
+          <option value="select" name="select" FontAwesomeIcon>
+            Occasion
           </option>
           <option value="Birthday" name="birthday">
             Birthday

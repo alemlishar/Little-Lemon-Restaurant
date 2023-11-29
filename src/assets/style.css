@@ -242,3 +242,13 @@ body {
   border-radius: 10px;
   margin-bottom: 10px;
 }
+
+.collapsible .content {
+  padding: 6px;
+  background-color: #eeeeee;
+}
+.collapsible .header {
+  background-color: #dddddd;
+  padding: 6px;
+  cursor: pointer;
+}
