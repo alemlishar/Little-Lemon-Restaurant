@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
-import "../assets/style.css"
-import specialDatas from "./../assets/Special-food-list"
+import "../../assets/style.css"
+import specialDatas from "../../assets/Special-food-list"
 import SpecialFood from "./SpecialFood"
 
 export default function Highlightspecials() {
@@ -20,21 +20,21 @@ export default function Highlightspecials() {
   }, [])
 
   return (
-    <div className="highlight-main-container">
-      <div
+    <nav className="highlight-main-container">
+      <nav
         style={{
           width: "100%",
-          height: "100px",
+          height: "15%",
         }}
       >
         <p className="highlight-special-paragraph">This Weeks Specials!</p>
         {matches && (
-          <div>
+          <nav>
             <button className="highlight-order-button">Online menu</button>
-          </div>
+          </nav>
         )}
-      </div>
-      <div className="special-food-specialbox-container" id="special container">
+      </nav>
+      <nav className="special-food-specialbox-container" id="special container">
         {specialDatas.map((data) => (
           <SpecialFood
             key={data.id}
@@ -44,7 +44,7 @@ export default function Highlightspecials() {
             price={data.price}
           />
         ))}
-      </div>
-    </div>
+      </nav>
+    </nav>
   )
 }

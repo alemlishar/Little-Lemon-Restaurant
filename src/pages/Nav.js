@@ -1,33 +1,10 @@
-import { React, useState, useEffect } from "react"
-import logo from "./../assets/lemmon.png"
-import "../assets/style.css"
+import React from "react"
 import { Link } from "react-router-dom"
 
 export default function Nav() {
-  const [matches, setMatches] = useState(
-    window.matchMedia("(min-width: 768px)").matches
-  )
-  useEffect(() => {
-    window
-      .matchMedia("(min-width: 768px)")
-      .addEventListener("change", (e) => setMatches(e.matches))
-
-    return () => {
-      window
-        .matchMedia("(min-width: 768px)")
-        .removeEventListener("change", (e) => setMatches(e.matches))
-    }
-  }, [])
   return (
-    <div className="nav-main-container">
-      {matches && (
-        <div className="nav-menu-container-div1">
-          <span className="nav-logo-container">
-            <img src={logo} width="170px" height={55} alt=""></img>
-          </span>
-        </div>
-      )}
-      <div className="nav-menu-container-div">
+    <>
+      <nav className="nav-menu-container-div">
         <ul className="nav-menu-container" style={{ liststyle: "no-bullet" }}>
           <li className="nav-menu-li">
             <Link style={{ textDecoration: "none" }} to="/">
@@ -44,7 +21,7 @@ export default function Nav() {
           <li className="nav-menu-li">Order online</li>
           <li className="nav-menu-li">Login</li>
         </ul>
-      </div>
-    </div>
+      </nav>
+    </>
   )
 }

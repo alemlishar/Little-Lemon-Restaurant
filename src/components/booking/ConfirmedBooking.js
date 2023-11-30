@@ -15,6 +15,7 @@ export default function ConfirmedBooking() {
           position: "relative",
           marginTop: "30px",
           left: "1%",
+          marginBottom: "100px",
         }}
       >
         <h1

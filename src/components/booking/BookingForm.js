@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import useScript from "../assets/UseScripts"
+import useScript from "../../assets/UseScripts"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEnvelope, faFontAwesome } from "@fortawesome/free-solid-svg-icons"
 import { library } from "@fortawesome/fontawesome-svg-core"
@@ -162,13 +162,11 @@ export default function BookingForm({
   }
 
   return (
-    <div
+    <nav
       className="booking-form-container"
       style={{ width: matches ? "650px" : "330px" }}
     >
-      <h2
-        style={{ marginTop: "20px", color: "#495e57", margFontinLeft: "5px" }}
-      >
+      <h2 style={{ marginTop: "20px", color: "#495e57", marginLeft: "5px" }}>
         Booking Table Form
       </h2>
 
@@ -189,13 +187,13 @@ export default function BookingForm({
           className="booking-form-input"
         />
         {errors.bookingDate ? (
-          <div style={{ display: "inline", color: "red", marginLeft: "10px" }}>
+          <nav style={{ display: "inline", color: "red", marginLeft: "10px" }}>
             {errors.bookingDate}
-          </div>
+          </nav>
         ) : null}
         <br />
         {matches ? (
-          <div className="booking-button-container">
+          <nav className="booking-button-container">
             <button
               style={{ marginLeft: matches ? "115px" : "0px" }}
               className="booking-form-button"
@@ -210,7 +208,7 @@ export default function BookingForm({
             >
               Make a reservation
             </button>
-          </div>
+          </nav>
         ) : null}
         <label htmlFor="res-time" style={{ marginTop: "30px" }}>
           Choose time
@@ -233,7 +231,7 @@ export default function BookingForm({
           })}
         </select>
         {errors.bookingTime ? (
-          <div
+          <nav
             style={{
               display: matches ? "inline" : "block",
               color: "red",
@@ -241,7 +239,7 @@ export default function BookingForm({
             }}
           >
             {errors.bookingTime}
-          </div>
+          </nav>
         ) : null}
         <br />
         <label htmlFor="guests">Number of guests</label> <br />
@@ -257,9 +255,9 @@ export default function BookingForm({
           onChange={handleNumGuest}
         />
         {errors.numberOfGuest ? (
-          <div style={{ display: "inline", color: "red", marginLeft: "10px" }}>
+          <nav style={{ display: "inline", color: "red", marginLeft: "10px" }}>
             {errors.numberOfGuest}
-          </div>
+          </nav>
         ) : null}
         <br />
         <label htmlFor="occasion">Occasion</label> <br />
@@ -286,9 +284,9 @@ export default function BookingForm({
           </option>
         </select>
         {errors.occasion ? (
-          <div style={{ display: "inline", color: "red", marginLeft: "10px" }}>
+          <nav style={{ display: "inline", color: "red", marginLeft: "10px" }}>
             {errors.occasion}
-          </div>
+          </nav>
         ) : null}
         <br />
         <br />
@@ -309,6 +307,6 @@ export default function BookingForm({
           </button>
         ) : null}
       </form>
-    </div>
+    </nav>
   )
 }

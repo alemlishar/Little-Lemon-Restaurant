@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { useCollapse } from "react-collapsed"
-import "../assets/style.css"
+import "../../assets/style.css"
 
 export default function BookingSlot(item, value) {
   console.log("items" + item + "value:" + value)

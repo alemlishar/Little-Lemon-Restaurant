@@ -1,20 +1,18 @@
 import React, { Component } from "react"
-import "../assets/style.css"
+import "../../assets/style.css"
 
 export default function SpecialFood({ image, title, description, price }) {
   const order = "order Delivery"
-
   return (
     <div
       style={{
         width: "200px",
         float: "left",
         border: "1px solid #EDEfEE",
-        left: "50%",
-        height: "350px",
         marginTop: "20px",
         marginLeft: "15px",
         backgroundColor: "#EDEfEE",
+        position: "relative",
       }}
     >
       <img

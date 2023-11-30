@@ -1,16 +1,17 @@
 import "./App.css"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Home from "./pages/Home"
-import BookingPage from "./pages/BookingPage"
-import Nav from "./pages//Nav"
+import BookingPage from "./components/booking/BookingPage"
 import Main from "./pages/Main"
 import PageNotFound from "./pages/PageNotFound"
-import ConfirmedBooking from "./pages/ConfirmedBooking"
+import ConfirmedBooking from "./components/booking/ConfirmedBooking"
+import Header from "./pages/Header"
+import Footer from "./pages/Footer"
 function App() {
   return (
     <>
       <BrowserRouter>
-        <Nav></Nav>
+        <Header></Header>
         <Main></Main>
         <Routes>
           <Route index element={<Home />} />
@@ -19,6 +20,7 @@ function App() {
           <Route path="confirmedbook" element={<ConfirmedBooking />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
+        <Footer></Footer>
       </BrowserRouter>
     </>
   )
